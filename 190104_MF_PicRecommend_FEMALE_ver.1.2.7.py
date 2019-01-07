@@ -3,7 +3,6 @@ import pandas as pd
 print(pd.__version__)
 import numpy as np
 import pymysql
-import http.server
 
 import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -129,6 +128,9 @@ content = predictions.to_json()
 HOST_NAME = '0.0.0.0'
 PORT_NUMBER = 9000
 
+path = ''
+test_1 = 'HoHo'
+
 
 class MyHandler(BaseHTTPRequestHandler):
     def do_HEAD(self):
@@ -142,19 +144,21 @@ class MyHandler(BaseHTTPRequestHandler):
         else:
             self.respond({'status': 404})
 
+
     def handle_http(self, status_code, path):
         self.send_response(status_code)
         self.send_header('Content-type', 'application/json')
         self.end_headers()
 
-        return bytes(content, 'UTF-8')
+        return bytes(test_1, 'UTF-8')
 
     def respond(self, opts):
         response = self.handle_http(opts['status'], self.path)
         self.wfile.write(response)
 
 
-# 포스트로 받는 부분만 만들어서 동작부분만 집어 넣으면 된다.
+
+# get으로
 
 if __name__ == '__main__':
     server_class = HTTPServer
@@ -166,3 +170,8 @@ if __name__ == '__main__':
         pass
     httpd.server_close()
     print(time.asctime(), 'Server Stops - %s:%s' % (HOST_NAME, PORT_NUMBER))
+    
+if path == '/foo':
+    test_1 = 'HaHa'
+else:
+    pass
